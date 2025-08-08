@@ -4,62 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K7 Studio - Transforme Sua Vida Através da Dança</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/x-icon" href="https://github.com/k7studio/k7studio/raw/refs/heads/main/logo/favicon.ico?raw=true">
+    
+    <link rel="icon" type="image/x-icon" href="logo/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
-        }
-        
-        .bg-primary {
-            background-color: #5d5f2c;
-        }
-        
-        .text-primary {
-            color: #5d5f2c;
-        }
-        
-        .bg-accent {
-            background-color: #6b6c50;
-        }
-        
-        .text-accent {
-            color: #6b6c50;
-        }
-        
-        .bg-highlight {
-            background-color: #cdcdbb;
-        }
-        
-        .text-highlight {
-            color: #cdcdbb;
-        }
-        
-        .hero-section {
-            background: linear-gradient(rgba(93, 95, 44, 0.8), rgba(107, 108, 80, 0.8)), 
-                        url('https://images.unsplash.com/photo-1547153760-18fc86324498?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-        
-        .dance-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        
-        .teacher-card:hover {
-            transform: scale(1.05);
-        }
-        
-        .testimonial-card:hover {
-            transform: scale(1.02);
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
+    
 </head>
 <body class="bg-gray-50">
     <!-- Navigation -->
@@ -67,16 +16,16 @@
         <div class="container mx-auto px-6 py-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
-                    <img src="https://github.com/k7studio/k7studio/blob/main/logo/k7studio-logo-white.png?raw=true" alt="K7 Studio Logo" class="h-16">
+                    <img src="logo/k7studio-logo-white.png" alt="K7 Studio Logo" class="h-16">
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#home" class="text-white hover:text-highlight transition">Início</a>
                     <a href="#about" class="text-white hover:text-highlight transition">Sobre</a>
-                    <a href="#classes" class="text-white hover:text-highlight transition">Aulas</a>
-                    <a href="#teachers" class="text-white hover:text-highlight transition">Professores</a>
-                    <a href="#schedule" class="text-white hover:text-highlight transition">Horários</a>
-                    <a href="#benefits" class="text-white hover:text-highlight transition">Benefícios</a>
                     <a href="#search" class="text-white hover:text-highlight transition">O Que Oferecemos</a>
+                    <a href="#classes" class="text-white hover:text-highlight transition">Aulas</a>
+                    <a href="#schedule" class="text-white hover:text-highlight transition">Horários</a>
+                    <a href="#teachers" class="text-white hover:text-highlight transition">Professores</a>
+                    <a href="#benefits" class="text-white hover:text-highlight transition">Benefícios</a>
                     <a href="#contact" class="text-white hover:text-highlight transition">Contato</a>
                 </div>
                 <div class="md:hidden">
@@ -90,9 +39,10 @@
         <div class="mobile-menu hidden md:hidden bg-accent">
             <a href="#home" class="block py-2 px-4 text-white hover:bg-primary">Início</a>
             <a href="#about" class="block py-2 px-4 text-white hover:bg-primary">Sobre</a>
+            <a href="#search" class="block py-2 px-4 text-white hover:bg-primary">O Que Oferecemos</a>
             <a href="#classes" class="block py-2 px-4 text-white hover:bg-primary">Aulas</a>
-            <a href="#teachers" class="block py-2 px-4 text-white hover:bg-primary">Professores</a>
             <a href="#schedule" class="block py-2 px-4 text-white hover:bg-primary">Horários</a>
+            <a href="#teachers" class="block py-2 px-4 text-white hover:bg-primary">Professores</a>
             <a href="#benefits" class="block py-2 px-4 text-white hover:bg-primary">Benefícios</a>
             <a href="#contact" class="block py-2 px-4 text-white hover:bg-primary">Contato</a>
         </div>
@@ -115,7 +65,7 @@
             <h2 class="text-3xl md:text-4xl font-bold text-center text-primary mb-12">Sobre Nós</h2>
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
-                    <img src="https://github.com/k7studio/k7studio/blob/main/img/sobre2.jpg?raw=true" 
+                    <img src="img/sobre2.jpg" 
                          alt="K7 Studio" class="rounded-lg shadow-xl w-full h-auto">
                 </div>
                 <div class="md:w-1/2">
@@ -193,7 +143,7 @@
                 
                 <!-- Dance Card 2 -->
                 <div class="dance-card bg-white rounded-lg overflow-hidden shadow-md transition duration-500">
-                    <img src="https://github.com/k7studio/k7studio/blob/main/img/casal01d.jpg?raw=true" 
+                    <img src="img/casal01d.jpg" 
                          alt="Casais dançando Brega no Pará" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-primary mb-2">Brega e Forró</h3>
@@ -204,7 +154,7 @@
                 
                 <!-- Dance Card 3 -->
                 <div class="dance-card bg-white rounded-lg overflow-hidden shadow-md transition duration-500">
-                    <img src="https://github.com/k7studio/k7studio/blob/main/img/casal01g.jpg?raw=true" 
+                    <img src="img/casal01g.jpg" 
                          alt="Salsa e Merengue" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-primary mb-2">Salsa e Merengue</h3>
@@ -539,7 +489,7 @@
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
-                    <img src="https://github.com/k7studio/k7studio/blob/main/logo/k7studio-logo-white.png?raw=true" alt="K7 Studio Logo" class="h-12">
+                    <img src="logo/k7studio-logo-white.png" alt="K7 Studio Logo" class="h-12">
                 </div>
                 <div class="text-center md:text-right">
                     <p>&copy; 2025 K7 Studio. Todos os direitos reservados.</p>
@@ -549,25 +499,6 @@
         </div>
     </footer>
 
-    <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-button').addEventListener('click', function() {
-            document.querySelector('.mobile-menu').classList.toggle('hidden');
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-                
-                // Close mobile menu if open
-                document.querySelector('.mobile-menu').classList.add('hidden');
-            });
-        });
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
