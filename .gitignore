@@ -1,0 +1,28 @@
+# Ignorar arquivos locais e sensíveis
+local.env
+.env
+.env.local
+.env.*.local
+
+# Ignorar logs e backups locais
+logs/
+backup/
+build/backup/
+
+# Ignorar diretórios de dependências e caches
+node_modules/
+dist/
+.cache/
+
+# Ignorar arquivos temporários de editores/IDE
+*~
+*.swp
+.vscode/
+
+# Ignorar arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar arquivos de log
+*.log
+

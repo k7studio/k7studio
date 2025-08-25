@@ -1,0 +1,22 @@
+{
+  "ci": {
+    "collect": {
+      "static-dir": "build",
+      "url": ["https://www.k7studio.com.br"],
+      "settings": {
+        "chromeFlags": [
+          "--headless=new",
+          "--disable-dev-shm-usage",
+          "--no-zygote"
+        ],
+        "maxWaitForLoad": 60000,
+        "maxWaitForFcp": 60000,
+        "maxWaitForLcp": 60000
+      }
+    },
+    "upload": {
+      "target": "filesystem"
+    }
+  }
+}
+

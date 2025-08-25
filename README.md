@@ -1,0 +1,404 @@
+# 🎯 K7 Studio – Sistema de Otimização e CI/CD com Docker Ubuntu 24.04
+
+Este projeto implementa uma cadeia DevOps completa para garantir **performance mobile-first**, **zero-downtime** e **automação CI/CD robusta** do site [k7studio.com.br](https://k7studio.com.br), agora em ambiente padronizado via container Docker Ubuntu 24.04.
+---
+
+## 📌 Principais Recursos
+
+- Ambiente Docker único baseado em Ubuntu 24.04.  
+- Navegador Google Chrome estável instalado e configurado para Lighthouse CI.  
+- Scripts shell padronizados para build, otimização, validação, rollback e manutenção.  
+- Pipeline CI/CD no GitHub Actions com rollback automático em falhas.  
+- Estrutura organizada para facilitar desenvolvimento, manutenção e deploy consistente.
+---
+
+## 📦 Setup Inicial
+
+### 1. Pré-requisitos
+
+- Docker instalado ([Guia oficial](https://docs.docker.com/get-docker/))  
+- Git instalado  
+
+### 2. Clonar o repositório
+git config user.name "K7 Studio"
+git config user.email "k7.danceandsport@gmail.com"
+git remote set-url origin git@github-k7studio:k7studio/k7studio.git
+git clone https://github.com/k7studio/k7studio.git
+cd k7studio
+
+### 3. Construir a imagem Docker
+
+./scripts/docker-build.sh
+
+### 4. Criar arquivo local de variáveis de ambiente para Docker Compose
+
+./scripts/prepare-local-env.sh
+
+### 5. Rodar o container para desenvolvimento e execução contínua
+
+docker compose up --remove-orphans -d
+
+# O serviço ficará ativo aguardando comandos, permitindo execução dos scripts com docker compose exec
+---
+
+## 🚀 Uso dos Scripts Shell no Container
+
+### Lista de scripts e suas funções:
+
+| Script                      | Função                                                                     |
+|-----------------------------|----------------------------------------------------------------------------|
+| `install-tools.sh`          | Valida e instala ferramentas e dependências dentro do container.           |
+| `optimize-projeto.sh`       | Otimização completa do projeto (minificação JS/CSS, WebP, Critical CSS).   |
+| `update-content.sh`         | Atualização incremental do conteúdo, minificando apenas arquivos alterados.|
+| `update-html-fallback.sh`   | Atualiza build/index.html para suporte eficiente a imagens WebP fallback.  |
+| `validate-deploy.sh`        | Realiza validação pós-deploy; pode rodar Lighthouse CI (opcional).         |
+| `rollback.sh`               | Restaura backup anterior em caso de falha.                                 |
+| `run.sh`                    | Script mestre para execução coordenada dos scripts principais.             |
+| `run-all.sh`                | Executa fluxo completo: instalação, otimização, atualização, validação.    |
+| `manutencao-logs.sh`        | Limpeza automática de arquivos de log antigos.                             |
+| `docker-build.sh`           | Script para build da imagem Docker.                                        |
+| `docker-run.sh`             | Executa container em modo interativo.                                      |
+| `docker-exec.sh`            | Executa comandos dentro do container, com build automático se precisar.    |
+
+### Exemplos de uso:
+
+- Instalar ferramentas necessárias:
+
+./scripts/install-tools.sh
+
+- Executar otimização completa:
+
+./scripts/optimize-projeto.sh
+
+- Atualizar fallback de imagens WebP no HTML:
+
+./scripts/update-html-fallback.sh
+
+- Validar deploy (sem Lighthouse CI por padrão):
+
+./scripts/validate-deploy.sh
+
+- Validar deploy com Lighthouse CI manualmente:
+
+./scripts/validate-deploy.sh --lighthouse
+
+- Fluxo completo de build até validação:
+
+./scripts/run-all.sh
+
+- Rollback de uma versão anterior:
+
+./scripts/rollback.sh --list
+./scripts/rollback.sh --backup <timestamp> --force
+
+- Executar container para desenvolvimento interativo:
+
+docker-compose run k7studio /bin/bash
+---
+
+## ⚙️ Pipeline CI/CD no GitHub Actions
+
+- Build da imagem Docker usando Ubuntu 24.04  
+- Execução do fluxo completo via `run-all.sh`  
+- Upload dos logs para análise  
+- Deploy no GitHub Pages com rollback em falhas  
+---
+
+## 📁 Estrutura dos Diretórios no Projeto
+
+/workspace
+├── index.html
+├── css/
+├── js/
+├── img/
+├── logo/
+├── scripts/
+├── config/
+├── logs/
+├── backup/
+├── build/
+├── .github/
+├── .env.example
+├── local.env
+├── README.md
+---
+
+## 💾 Considerações Importantes
+
+- Execute todos os comandos de build e otimização dentro do container para evitar inconsistências.  
+- Use `local.env` para variáveis UID/GID no Docker Compose.  
+- Backups e logs ficam fora do controle de versão (definidos no `.gitignore`).  
+- Limpeza periódica dos logs com `manutencao-logs.sh`.
+
+#### Uso padronizado do arquivo `.env`
+
+Para simplificar o gerenciamento das variáveis de ambiente e evitar confusão, recomenda-se utilizar sempre o arquivo `.env` na raiz do projeto para definir as variáveis `LOCAL_USER_ID` e `LOCAL_GROUP_ID`. Caso o arquivo `local.env` exista por questões históricas, avalie sua remoção ou deixe claro que é um arquivo auxiliar, explicando diferenças para evitar ambiguidades nas variáveis usadas pelo Docker Compose.
+
+#### Atualização do comando Docker Compose
+
+A ferramenta Docker CLI atualizou o comando tradicional `docker-compose` para a forma moderna e oficial `docker compose` (com espaço). Recomenda-se que toda a equipe migre para `docker compose` para garantir compatibilidade futura, melhor integração e acesso a novos recursos do Docker.
+
+**Exemplo:**  
+- Uso antigo: `docker-compose up -d`  
+- Uso recomendado: `docker compose up -d`
+---
+
+## ✅ Checklist Simplificado para Migração e Implantação
+
+# Atualizar .env com UID e GID corretos
+echo "LOCAL_USER_ID=$(id -u)" > .env
+echo "LOCAL_GROUP_ID=$(id -g)" >> .env
+
+# Limpar containers órfãos
+docker compose down --remove-orphans
+
+# Build da imagem Docker
+docker build -t k7studio-build -f config/Dockerfile .
+
+# Subir o container
+docker compose up --remove-orphans -d
+
+# Acessar container
+docker compose exec k7studio /bin/bash
+
+# Executar scripts em sequência
+./scripts/install-tools.sh
+./scripts/optimize-projeto.sh
+./scripts/update-content.sh
+./scripts/validate-deploy.sh
+
+# Prévia local (novo conteúdo)
+docker compose run --service-ports k7studio ./scripts/preview-build.sh
+
+# Commit e push
+git add .
+git commit -m "chore: atualização incremental"
+git push origin main
+
+## 💾 Considerações Importantes
+- Existe o script scripts/preview-build.sh para pré-visualização local, reforçando o uso do parâmetro --service-ports.
+
+## ✅ Checklist Simplificado para Atualização Incremental (exemplo: index.html) no Projeto K7 Studio
+
+# 1. Alterar o arquivo localmente no diretório do projeto
+# (exemplo: editar index.html, css/, js/, imagens, etc)
+
+# 2. Garantir que as alterações estejam sincronizadas no container
+# Se usar volumes docker, atualizações são refletidas imediatamente no container.
+
+# 3. Executar atualização incremental dentro do container:
+docker compose exec k7studio ./scripts/update-content.sh
+
+# 4. (Opcional) Validar a atualização:
+docker compose exec k7studio ./scripts/validate-deploy.sh
+
+# 5. (Opcional) Pré-visualizar build atualizado no host:
+docker compose run --service-ports k7studio ./scripts/preview-build.sh
+
+# 6. Comitar e enviar para o repositório para disparo do pipeline:
+git add .
+git commit -m "chore: atualização incremental de conteúdo"
+git push origin main
+
+## 💾 Considerações Importantes
+- Lembrar que a sincronização via volumes é essencial para que as atualizações locais reflitam no container, evitando dúvidas.
+
+## ✅ Checklist de Atualizações e Sequência para Deploy
+---
+
+Quando você modificar qualquer conteúdo do projeto (exemplo: atualização no `index.html`), siga o fluxo a seguir para refletir as mudanças no ambiente, validar e fazer o deploy no GitHub Pages.
+### Passo 1: Subir o container
+docker compose up --remove-orphans -d
+
+### Passo 2: Sincronizar alterações no container
+
+Se estiver usando volumes Docker, alterações nos arquivos locais serão refletidas imediatamente no container.
+
+### Passo 3: Executar atualização incremental dentro do container
+
+No terminal do host:
+
+docker compose exec <nome do container> ./scripts/update-content.sh
+
+Exemplo para este projeto:
+
+docker compose exec  k7studio ./scripts/update-content.sh
+
+### Passo 4: Validar atualização (opcional)
+
+docker compose exec k7studio ./scripts/validate-deploy.sh
+
+Lembre-se que a opção `--no-lighthouse` não é suportada.
+
+### Passo 5: Pré-visualizar build atualizado localmente (opcional)
+
+docker compose run --service-ports k7studio ./scripts/preview-build.sh
+
+### Passo 6: Commitar e enviar para o repositório
+
+git add .
+git commit -m "chore: atualização incremental de conteúdo"
+git push origin main
+
+Este push dispara a pipeline CI/CD e implanta a nova versão no GitHub Pages.
+---
+
+### Como parar o container após terminar
+
+Se a instância principal estiver rodando em background (**com `docker compose up -d`**), use para parar:
+
+docker compose down
+---
+
+### Nota sobre sincronização de arquivos
+
+Para que as atualizações locais reflitam no container e o processo funcione sem erros, é importante que o projeto utilize volumes Docker para sincronização de arquivos.
+---
+
+### Dica importante
+
+- Evite conflitos de porta executando a pré-visualização `preview-build.sh` preferencialmente usando `docker compose exec` se o container principal já estiver ativo.
+- Use sempre o comando atualizado `docker compose` (com espaço) para operar o Docker Compose.
+
+## ❓ FAQ - Dúvidas Comuns sobre Docker, Preview Local e Deploy
+
+### Por que recebo erro “port is already allocated” ao rodar preview com `docker compose run --service-ports`?
+
+Esse erro acontece quando a porta 8080 já está ocupada no host, geralmente porque o container principal está rodando e já mapeou essa porta.
+
+**Soluções:**
+
+- Se o container principal estiver ativo, use:
+
+command: ["tail", "-f", "/dev/null"]
+
+Assim, o container não sai após iniciar e pode receber comandos com `docker compose exec`.
+---
+
+### Devo usar `docker-compose` ou `docker compose`?
+
+Use sempre o comando oficial moderno:
+
+docker compose <comando>
+
+
+O `docker-compose` antigo ainda funciona, mas pode ser descontinuado. A migração evita problemas futuros e garante acesso às últimas funcionalidades.
+---
+
+### Preciso limpar containers antigos, o que faço?
+
+Use:
+
+docker compose down --remove-orphans
+
+para limpar containers órfãos ao alterar configurações no `docker-compose.yml`.
+---
+
+### Como evitar problemas com cache no GitHub Pages após fazer deploy?
+
+- Limpe cache do navegador (hard refresh, modo anônimo).
+- Aguarde alguns minutos para o cache CDN propagar as atualizações.
+- Certifique-se de que headers HTTP `Cache-Control` estejam configurados corretamente no deploy.
+---
+
+### Posso interromper o preview local com Ctrl+C?
+
+Sim, para o comando:
+
+docker compose run --service-ports k7studio ./scripts/preview-build.sh
+
+use Ctrl+C para parar o servidor HTTP e assim o container temporário será encerrado automaticamente.
+---
+
+### O que fazer quando recebo erro “port already allocated” ao rodar preview?
+
+Isso ocorre porque a porta 8080 já está ocupada pelo container principal ativo (iniciado com `docker compose up -d`).
+
+#### Soluções:
+
+- Para rodar o preview no container existente, sem tentar alocar a porta novamente, usar o comando:
+
+docker compose exec k7studio ./scripts/preview-build.sh
+
+- Ou então pare o container principal primeiro:
+
+docker compose down
+
+e só depois execute seu preview com:
+
+docker compose run --service-ports k7studio ./scripts/preview-build.sh
+---
+
+### Como faço para atualizar o projeto sem problemas?
+
+Execute:
+
+1. `docker compose exec k7studio ./scripts/update-content.sh`
+2. `docker compose exec k7studio ./scripts/validate-deploy.sh`
+3. Opcionalmente, pré-visualize.
+4. Faça commit e push para disparar deploy.
+---
+
+### Como paro o container principal após uso?
+
+Use para encerrar e liberar recursos:
+
+docker compose down
+---
+
+## ✅ Guia Operacional para Atualização, Preview e Deploy do Projeto K7 Studio com Docker
+
+1. Verifique que o container principal está rodando
+Após a criação do container principal em modo daemon:
+docker compose up --remove-orphans -d
+
+O container chamado k7studio (ou k7studio-container) estará ativo.
+
+2. Editar arquivos locais no projeto
+Faça as alterações desejadas, por exemplo no index.html.
+
+3. Aplicar atualizações incrementais no container
+Execute no host:
+docker compose exec k7studio ./scripts/update-content.sh
+
+Isso aplicará a atualização mantendo otimizações anteriores.
+
+4. Validar as atualizações
+Opcionalmente, realizar validação do deploy:
+
+docker compose exec k7studio ./scripts/validate-deploy.sh
+
+5. Realizar pré-visualização local
+Se o container principal estiver ativo e usando a porta 8080 (como normalmente acontece), para evitar erro de porta ocupada:
+
+Use o comando exec para rodar o preview dentro do container em execução:
+
+docker compose exec k7studio ./scripts/preview-build.sh
+
+Ou,
+
+Se quiser testar em container separado com mapeamento explicito de porta:
+
+docker compose down  # para container principal e libera a porta
+docker compose run --service-ports k7studio ./scripts/preview-build.sh
+
+6. Commitar e enviar as mudanças para disparar deploy no GitHub
+Finalize com:
+
+git add .
+git commit -m "chore: atualização incremental"
+git push origin main
+
+Isso dispara o pipeline.
+
+7. Parar container principal após o trabalho
+Quando terminar, em host:
+
+docker compose down
+---
+
+## 📄 Licença
+
+Projeto exclusivo K7 Studio – Todos os direitos reservados.
+
+

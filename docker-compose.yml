@@ -1,0 +1,13 @@
+services:
+  k7studio:
+    image: k7studio-build
+    container_name: k7studio-container
+    user: "${LOCAL_USER_ID}:${LOCAL_GROUP_ID}"
+    volumes:
+      - ./:/workspace
+    working_dir: /workspace
+    ports:
+      - "8080:8080"
+    tty: true
+    stdin_open: true
+    command: ["tail", "-f", "/dev/null"]

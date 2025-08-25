@@ -1,0 +1,64 @@
+name: K7 Studio CI/CD com Docker e Rollback
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-24.04
+
+    env:
+      IMAGE_NAME: k7studio-build
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Configurar Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Construir imagem Docker
+        run: |
+          docker build -t $IMAGE_NAME -f config/Dockerfile .
+
+      - name: Executar processo completo via run-all.sh
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/workspace $IMAGE_NAME /workspace/scripts/run-all.sh
+        continue-on-error: false
+
+      # Se precisar executar validate-deploy.sh com Lighthouse manualmente (opcional):
+      # - name: Rodar validação do build com Lighthouse (opcional)
+      #   run: |
+      #     docker run --rm -v ${{ github.workspace }}:/workspace $IMAGE_NAME /workspace/scripts/validate-deploy.sh --lighthouse
+      #   continue-on-error: false
+
+      - name: Upload dos logs produzidos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k7studio-logs
+          path: |
+            ./logs/*.log
+
+      - name: Publicar no GitHub Pages
+        if: ${{ success() }}
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+          force_orphan: true
+
+      - name: Mensagem de sucesso
+        if: ${{ success() }}
+        run: echo "Deploy concluído com sucesso!"
+
+      - name: Rollback caso falhe o deploy
+        if: ${{ failure() && steps['Executar processo completo via run-all.sh'].outcome == 'success' }}
+        run: |
+          echo "Deploy falhou, iniciando rollback..."
+          docker run --rm -v ${{ github.workspace }}:/workspace $IMAGE_NAME /workspace/scripts/rollback.sh --force
+          echo "Rollback concluído."
+
