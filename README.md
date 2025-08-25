@@ -20,16 +20,18 @@ Este projeto implementa uma cadeia DevOps completa para garantir **performance m
 - Git instalado  
 
 ### 2. Clonar o repositório
+```
 git config user.name "K7 Studio"
 git config user.email "k7.danceandsport@gmail.com"
 git remote set-url origin git@github-k7studio:k7studio/k7studio.git
 git clone https://github.com/k7studio/k7studio.git
 cd k7studio
+```
 
 ### 3. Construir a imagem Docker
-
+```
 ./scripts/docker-build.sh
-
+```
 ### 4. Criar arquivo local de variáveis de ambiente para Docker Compose
 
 ./scripts/prepare-local-env.sh
