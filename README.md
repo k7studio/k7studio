@@ -103,39 +103,39 @@ docker-compose run k7studio /bin/bash
 
 - Antes de enviar suas alterações para o repositório remoto, siga esta sequência correta para evitar problemas de autenticação e garantir que seu histórico local esteja consistente:
 
-1. Configurar seu nome e e-mail para commits (uma única vez por máquina):
+### 1. Configurar seu nome e e-mail para commits (uma única vez por máquina):
 ```
 git config user.name "K7 Studio"
 git config user.email "k7.danceandsport@gmail.com"
 ```
-2. Clonar o repositório (caso ainda não tenha):
+### 2. Clonar o repositório (caso ainda não tenha):
 ```
 git clone https://github.com/k7studio/k7studio.git
 cd k7studio
 ```
-3. Configurar a URL remota para usar SSH (antes do primeiro push para evitar solicitar senha):
+### 3. Configurar a URL remota para usar SSH (antes do primeiro push para evitar solicitar senha):
 ```
 git remote set-url origin git@github.com:k7studio/k7studio.git
 ```
-4. Verificar o status dos arquivos modificados/localizados:
+### 4. Verificar o status dos arquivos modificados/localizados:
 ```
 git status
 ```
-5. Adicionar as alterações para o próximo commit:
+### 5. Adicionar as alterações para o próximo commit:
 ```
 git add .
 ```
-6. Criar o commit local com mensagem clara e descritiva:
+### 6. Criar o commit local com mensagem clara e descritiva:
 ```
 git commit -m "Descrição clara da mudança realizada"
 ```
-7. Enviar as alterações para o ramo principal no repositório remoto:
+### 7. Enviar as alterações para o ramo principal no repositório remoto:
 ```
 git push origin main
 ```
 ---
 
-**Observação:**  
+### **Observação:**  
 - Certifique-se de configurar corretamente as chaves SSH no seu sistema e adicionar a chave pública em sua conta GitHub para autenticação sem senha.  
 - Caso precise de ajuda para configurar SSH ou resolver problemas de autenticação, revise a seção FAQ.
 
