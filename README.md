@@ -570,4 +570,3 @@ docker compose down
 - Projeto exclusivo K7 Studio – Todos os direitos reservados.
 
 
-
