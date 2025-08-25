@@ -364,9 +364,10 @@ git add .
 git commit -m "Descrição clara da mudança realizada"
 ```
 
-
-*Exemplo:*  
-`git commit -m "chore: atualização incremental de conteúdo"`
+- *Exemplo:*
+```
+git commit -m "chore: atualização incremental de conteúdo"
+```
 ---
 
 ### Passo 5: Enviar alterações para o repositório remoto
