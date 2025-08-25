@@ -578,12 +578,12 @@ docker compose down
 
 ### Passo a passo para resolver conflitos após `git pull`
 
-- 1. Verifique os arquivos com conflito:
+### 1. Verifique os arquivos com conflito:
 ```
 git status
 ```
 
-- 2. Edite os arquivos com conflito (ex: `README.md`), localize os marcadores de conflito:
+### 2. Edite os arquivos com conflito (ex: `README.md`), localize os marcadores de conflito:
 ```
 <<<<<<< HEAD
 (seu código local)
@@ -591,19 +591,19 @@ git status
 commit_hash
 ```
 
-- 3. Resolva os conflitos manualmente, removendo as linhas com os marcadores e definindo o conteúdo final.
+### 3. Resolva os conflitos manualmente, removendo as linhas com os marcadores e definindo o conteúdo final.
 
-- 4. Marque como resolvido:
+### 4. Marque como resolvido:
 ```
 git add <arquivo-conflitado>
 ```
 
-- 5. Complete o merge com um commit:
+### 5. Complete o merge com um commit:
 ```
 git commit
 ```
 
-- 6. Sincronize o branch com o remoto:
+### 6. Sincronize o branch com o remoto:
 ```
 git push origin main
 ```
