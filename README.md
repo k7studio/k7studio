@@ -184,8 +184,8 @@ git push origin main
 - A ferramenta Docker CLI atualizou o comando tradicional `docker-compose` para a forma moderna e oficial `docker compose` (com espaço). Recomenda-se que toda a equipe migre para `docker compose` para garantir compatibilidade futura, melhor integração e acesso a novos recursos do Docker.
 
 **Exemplo:**  
-- Uso antigo:
- `docker-compose up -d`  
+- Uso antigo: 
+`docker-compose up -d`  
 - Uso recomendado: 
 `docker compose up -d`
 ---
@@ -219,6 +219,7 @@ docker compose exec k7studio /bin/bash
 ```
 ./scripts/install-tools.sh
 ./scripts/optimize-projeto.sh
+./scripts/update-html-fallback.sh
 ./scripts/update-content.sh
 ./scripts/validate-deploy.sh
 ```
