@@ -211,7 +211,9 @@ docker build -t k7studio-build -f config/Dockerfile .
 docker compose up --remove-orphans -d
 ```
 ### Acessar container
+```
 docker compose exec k7studio /bin/bash
+```
 
 ### Executar scripts em sequência
 ```
@@ -237,26 +239,28 @@ git push origin main
 
 ## ✅ Checklist Simplificado para Atualização Incremental (exemplo: index.html) no Projeto K7 Studio
 
-1. Alterar o arquivo localmente no diretório do projeto
-# (exemplo: editar index.html, css/, js/, imagens, etc)
+### Alterar o arquivo localmente no diretório do projeto
+- (exemplo: editar index.html, css/, js/, imagens, etc)
 
-2. Garantir que as alterações estejam sincronizadas no container
-# Se usar volumes docker, atualizações são refletidas imediatamente no container.
+### Garantir que as alterações estejam sincronizadas no container
+- Se usar volumes docker, atualizações são refletidas imediatamente no container.
 
-3. Executar atualização incremental dentro do container:
+### Executar atualização incremental dentro do container:
 ```
 docker compose exec k7studio ./scripts/update-content.sh
 ```
 
-4. (Opcional) Validar a atualização:
+### (Opcional) Validar a atualização:
 ```
 docker compose exec k7studio ./scripts/validate-deploy.sh
 ```
 
-5. (Opcional) Pré-visualizar build atualizado no host:
+### (Opcional) Pré-visualizar build atualizado no host:
+```
 docker compose run --service-ports k7studio ./scripts/preview-build.sh
+```
 
-6. Comitar e enviar para o repositório para disparo do pipeline:
+### Comitar e enviar para o repositório para disparo do pipeline:
 ```
 git add .
 git commit -m "chore: atualização incremental de conteúdo"
@@ -267,92 +271,97 @@ git push origin main
 - Lembrar que a sincronização via volumes é essencial para que as atualizações locais reflitam no container, evitando dúvidas.
 
 ## ✅ Checklist de Atualizações e Sequência para Deploy
----
-
-Quando você modificar qualquer conteúdo do projeto (exemplo: atualização no `index.html`), siga o fluxo a seguir para refletir as mudanças no ambiente, validar e fazer o deploy no GitHub Pages.
+- Quando você modificar qualquer conteúdo do projeto (exemplo: atualização no `index.html`), siga o fluxo a seguir para refletir as mudanças no ambiente, validar e fazer o deploy no GitHub Pages.
 ### Passo 1: Subir o container
+```
 docker compose up --remove-orphans -d
+```
 
 ### Passo 2: Sincronizar alterações no container
-
-Se estiver usando volumes Docker, alterações nos arquivos locais serão refletidas imediatamente no container.
+- Se estiver usando volumes Docker, alterações nos arquivos locais serão refletidas imediatamente no container.
 
 ### Passo 3: Executar atualização incremental dentro do container
-
-No terminal do host:
-
+- No terminal do host:
+```
 docker compose exec <nome do container> ./scripts/update-content.sh
-
-Exemplo para este projeto:
-
+```
+- Exemplo para este projeto:
+```
 docker compose exec  k7studio ./scripts/update-content.sh
+```
 
 ### Passo 4: Validar atualização (opcional)
-
+```
 docker compose exec k7studio ./scripts/validate-deploy.sh
-
-Lembre-se que a opção `--no-lighthouse` não é suportada.
+```
+- Lembre-se que a opção `--no-lighthouse` não é suportada.
 
 ### Passo 5: Pré-visualizar build atualizado localmente (opcional)
-
+```
 docker compose run --service-ports k7studio ./scripts/preview-build.sh
-
+```
 ### Passo 6: Commitar e enviar para o repositório
-
+```
 git add .
 git commit -m "chore: atualização incremental de conteúdo"
 git push origin main
-
-Este push dispara a pipeline CI/CD e implanta a nova versão no GitHub Pages.
+```
+- Este push dispara a pipeline CI/CD e implanta a nova versão no GitHub Pages.
 ---
 
 ### Como parar o container após terminar
 
-Se a instância principal estiver rodando em background (**com `docker compose up -d`**), use para parar:
-
+- Se a instância principal estiver rodando em background (**com `docker compose up -d`**), use para parar:
+```
 docker compose down
+```
 ---
 
 ### Nota sobre sincronização de arquivos
-
-Para que as atualizações locais reflitam no container e o processo funcione sem erros, é importante que o projeto utilize volumes Docker para sincronização de arquivos.
+- Para que as atualizações locais reflitam no container e o processo funcione sem erros, é importante que o projeto utilize volumes Docker para sincronização de arquivos.
 ---
 
 ### Dica importante
 
 - Evite conflitos de porta executando a pré-visualização `preview-build.sh` preferencialmente usando `docker compose exec` se o container principal já estiver ativo.
 - Use sempre o comando atualizado `docker compose` (com espaço) para operar o Docker Compose.
-
 ---
 
 ## 📝 Guia Rápido para Controle de Alterações com Git
 
-Para manter o histórico organizado e garantir o fluxo correto de deploy, siga as boas práticas abaixo para controle de versões e sincronização com o repositório remoto.
+- Para manter o histórico organizado e garantir o fluxo correto de deploy, siga as boas práticas abaixo para controle de versões e sincronização com o repositório remoto.
 
 ### Passo 1: Configurar usuário Git (uma vez por máquina)
 
-Configure seu nome e e-mail para os commits:
+- Configure seu nome e e-mail para os commits:
+```
 git config user.name "K7 Studio"
 git config user.email "k7.danceandsport@gmail.com"
+```
 ---
 
 ### Passo 2: Verificar status dos arquivos
 
-Antes de qualquer operação, veja os arquivos modificados:
-
+- Antes de qualquer operação, veja os arquivos modificados:
+```
 git status
+```
 ---
 
 ### Passo 3: Adicionar arquivos ao staging
 
-Inclua as alterações para o próximo commit:
+- Inclua as alterações para o próximo commit:
+```
 git add .
+```
 ---
 
 ### Passo 4: Criar um commit com mensagem clara
 
-Registre as alterações no histórico local:
+- Registre as alterações no histórico local:
+```
 git commit -m "Descrição clara da mudança realizada"
+```
 
 
 *Exemplo:*  
@@ -360,13 +369,15 @@ git commit -m "Descrição clara da mudança realizada"
 ---
 
 ### Passo 5: Enviar alterações para o repositório remoto
-
-Faça o push para o ramo principal:
+- Faça o push para o ramo principal:
+```
 git push origin main
+```
 
-
-Se estiver usando SSH corretamente, não será solicitado usuário e senha.
+- Se estiver usando SSH corretamente, não será solicitado usuário e senha.
+```
 git remote set-url origin git@github.com:k7studio/k7studio.git
+```
 ---
 
 ### Dicas importantes
@@ -382,19 +393,21 @@ git remote set-url origin git@github.com:k7studio/k7studio.git
 
 - Caso receba erro de identidade, reconfigure user.name e user.email.
 - Para problemas de autenticação, preferira o uso de SSH ao invés de HTTPS.
+```
 git remote set-url origin git@github.com:k7studio/k7studio.git
+```
 ---
 
 ## ❓ FAQ - Dúvidas Comuns sobre Docker, Preview Local e Deploy
 
 ### Como saber se a configuração SSH para GitHub está funcionando?
 
-Após configurar sua chave SSH local e alterar a URL remota do Git para usar o protocolo SSH com o comando:
-
+- Após configurar sua chave SSH local e alterar a URL remota do Git para usar o protocolo SSH com o comando:
+```
 git remote set-url origin git@github.com:k7studio/k7studio.git
-
+```
 ao executar um push, espere uma saída semelhante a esta:
-
+```
 Enumerating objects: 80, done.
 Counting objects: 100% (80/80), done.
 Delta compression using up to 8 threads
@@ -404,42 +417,42 @@ Total 78 (delta 4), reused 17 (delta 1), pack-reused 0
 remote: Resolving deltas: 100% (4/4), completed with 1 local object.
 To github.com:k7studio/k7studio.git
 180a5c7..51a3f7e main -> main
+```
 
-
-Isso significa que o push foi enviado com sucesso usando SSH, sem solicitar usuário ou senha, indicando que a chave SSH está corretamente configurada.
-Em caso de erro ou solicitação de usuário/senha, revise sua configuração SSH e adicione sua chave pública ao GitHub em https://github.com/settings/ssh/new.
+- Isso significa que o push foi enviado com sucesso usando SSH, sem solicitar usuário ou senha, indicando que a chave SSH está corretamente configurada.
+- Em caso de erro ou solicitação de usuário/senha, revise sua configuração SSH e adicione sua chave pública ao GitHub em https://github.com/settings/ssh/new.
 ---
 
 ### Por que recebo erro “port is already allocated” ao rodar preview com `docker compose run --service-ports`?
 
-Esse erro acontece quando a porta 8080 já está ocupada no host, geralmente porque o container principal está rodando e já mapeou essa porta.
+- Esse erro acontece quando a porta 8080 já está ocupada no host, geralmente porque o container principal está rodando e já mapeou essa porta.
 
-**Soluções:**
+- **Soluções:**
 
 - Se o container principal estiver ativo, use:
-
+```
 command: ["tail", "-f", "/dev/null"]
+```
 
-Assim, o container não sai após iniciar e pode receber comandos com `docker compose exec`.
+- Assim, o container não sai após iniciar e pode receber comandos com `docker compose exec`.
 ---
 
 ### Devo usar `docker-compose` ou `docker compose`?
 
-Use sempre o comando oficial moderno:
-
+- Use sempre o comando oficial moderno:
+```
 docker compose <comando>
+```
 
-
-O `docker-compose` antigo ainda funciona, mas pode ser descontinuado. A migração evita problemas futuros e garante acesso às últimas funcionalidades.
+- O `docker-compose` antigo ainda funciona, mas pode ser descontinuado. A migração evita problemas futuros e garante acesso às últimas funcionalidades.
 ---
 
 ### Preciso limpar containers antigos, o que faço?
 
-Use:
-
+- Use para limpar containers órfãos ao alterar configurações no `docker-compose.yml`:
+```
 docker compose down --remove-orphans
-
-para limpar containers órfãos ao alterar configurações no `docker-compose.yml`.
+```
 ---
 
 ### Como evitar problemas com cache no GitHub Pages após fazer deploy?
@@ -451,102 +464,107 @@ para limpar containers órfãos ao alterar configurações no `docker-compose.ym
 
 ### Posso interromper o preview local com Ctrl+C?
 
-Sim, para o comando:
-
+- Sim, para o comando:
+```
 docker compose run --service-ports k7studio ./scripts/preview-build.sh
-
-use Ctrl+C para parar o servidor HTTP e assim o container temporário será encerrado automaticamente.
+```
+- Use Ctrl+C para parar o servidor HTTP e assim o container temporário será encerrado automaticamente.
 ---
 
 ### O que fazer quando recebo erro “port already allocated” ao rodar preview?
 
-Isso ocorre porque a porta 8080 já está ocupada pelo container principal ativo (iniciado com `docker compose up -d`).
+- Isso ocorre porque a porta 8080 já está ocupada pelo container principal ativo (iniciado com `docker compose up -d`).
 
 #### Soluções:
 
 - Para rodar o preview no container existente, sem tentar alocar a porta novamente, usar o comando:
-
+```
 docker compose exec k7studio ./scripts/preview-build.sh
-
+```
 - Ou então pare o container principal primeiro:
-
+```
 docker compose down
-
+```
 e só depois execute seu preview com:
-
+```
 docker compose run --service-ports k7studio ./scripts/preview-build.sh
+```
 ---
 
 ### Como faço para atualizar o projeto sem problemas?
 
-Execute:
-
-1. `docker compose exec k7studio ./scripts/update-content.sh`
-2. `docker compose exec k7studio ./scripts/validate-deploy.sh`
-3. Opcionalmente, pré-visualize.
-4. Faça commit e push para disparar deploy.
+- Execute:
+```
+docker compose exec k7studio ./scripts/update-content.sh
+docker compose exec k7studio ./scripts/validate-deploy.sh
+```
+- Opcionalmente, pré-visualize.
+- Faça commit e push para disparar deploy.
 ---
 
 ### Como paro o container principal após uso?
 
-Use para encerrar e liberar recursos:
-
+- Use para encerrar e liberar recursos:
+```
 docker compose down
+```
 ---
 
 ## ✅ Guia Operacional para Atualização, Preview e Deploy do Projeto K7 Studio com Docker
 
-1. Verifique que o container principal está rodando
-Após a criação do container principal em modo daemon:
+### 1. Verifique que o container principal está rodando
+- Após a criação do container principal em modo daemon:
+```
 docker compose up --remove-orphans -d
+```
 
-O container chamado k7studio (ou k7studio-container) estará ativo.
+- O container chamado k7studio (ou k7studio-container) estará ativo.
 
-2. Editar arquivos locais no projeto
-Faça as alterações desejadas, por exemplo no index.html.
+### 2. Editar arquivos locais no projeto
+- Faça as alterações desejadas, por exemplo no index.html.
 
-3. Aplicar atualizações incrementais no container
-Execute no host:
+### 3. Aplicar atualizações incrementais no container
+- Execute no host para aplica a atualização mantendo otimizações anteriores:
+```
 docker compose exec k7studio ./scripts/update-content.sh
+```
 
-Isso aplicará a atualização mantendo otimizações anteriores.
-
-4. Validar as atualizações
-Opcionalmente, realizar validação do deploy:
-
+### 4. Validar as atualizações
+- Opcionalmente, realizar validação do deploy:
+```
 docker compose exec k7studio ./scripts/validate-deploy.sh
+```
 
-5. Realizar pré-visualização local
-Se o container principal estiver ativo e usando a porta 8080 (como normalmente acontece), para evitar erro de porta ocupada:
-
-Use o comando exec para rodar o preview dentro do container em execução:
-
+### 5. Realizar pré-visualização local
+- Se o container principal estiver ativo e usando a porta 8080 (como normalmente acontece), para evitar erro de porta ocupada:
+- Use o comando exec para rodar o preview dentro do container em execução:
+```
 docker compose exec k7studio ./scripts/preview-build.sh
-
-Ou,
-
-Se quiser testar em container separado com mapeamento explicito de porta:
-
+```
+- Ou, se quiser testar em container separado com mapeamento explicito de porta:
+```
 docker compose down  # para container principal e libera a porta
 docker compose run --service-ports k7studio ./scripts/preview-build.sh
+```
 
-6. Commitar e enviar as mudanças para disparar deploy no GitHub
-Finalize com:
-
+### 6. Commitar e enviar as mudanças para disparar deploy no GitHub
+- Finalize com:
+```
 git add .
 git commit -m "chore: atualização incremental"
 git push origin main
+```
+- Isso dispara o pipeline.
 
-Isso dispara o pipeline.
-
-7. Parar container principal após o trabalho
-Quando terminar, em host:
-
+### 7. Parar container principal após o trabalho
+- Quando terminar, em host:
+```
 docker compose down
+```
 ---
 
 ## 📄 Licença
 
-Projeto exclusivo K7 Studio – Todos os direitos reservados.
+- Projeto exclusivo K7 Studio – Todos os direitos reservados.
 
 
