@@ -40,7 +40,7 @@ cd k7studio
 ```
 docker compose up --remove-orphans -d
 ```
-# O serviço ficará ativo aguardando comandos, permitindo execução dos scripts com docker compose exec
+- O serviço ficará ativo aguardando comandos, permitindo execução dos scripts com docker compose exec
 ---
 
 ## 🚀 Uso dos Scripts Shell no Container
@@ -101,7 +101,7 @@ docker-compose run k7studio /bin/bash
 
 ### Ordem correta das operações Git para uso do repositório K7 Studio
 
-Antes de enviar suas alterações para o repositório remoto, siga esta sequência correta para evitar problemas de autenticação e garantir que seu histórico local esteja consistente:
+- Antes de enviar suas alterações para o repositório remoto, siga esta sequência correta para evitar problemas de autenticação e garantir que seu histórico local esteja consistente:
 
 1. Configurar seu nome e e-mail para commits (uma única vez por máquina):
 ```
@@ -177,15 +177,17 @@ git push origin main
 
 #### Uso padronizado do arquivo `.env`
 
-Para simplificar o gerenciamento das variáveis de ambiente e evitar confusão, recomenda-se utilizar sempre o arquivo `.env` na raiz do projeto para definir as variáveis `LOCAL_USER_ID` e `LOCAL_GROUP_ID`. Caso o arquivo `local.env` exista por questões históricas, avalie sua remoção ou deixe claro que é um arquivo auxiliar, explicando diferenças para evitar ambiguidades nas variáveis usadas pelo Docker Compose.
+- Para simplificar o gerenciamento das variáveis de ambiente e evitar confusão, recomenda-se utilizar sempre o arquivo `.env` na raiz do projeto para definir as variáveis `LOCAL_USER_ID` e `LOCAL_GROUP_ID`. Caso o arquivo `local.env` exista por questões históricas, avalie sua remoção ou deixe claro que é um arquivo auxiliar, explicando diferenças para evitar ambiguidades nas variáveis usadas pelo Docker Compose.
 
 #### Atualização do comando Docker Compose
 
-A ferramenta Docker CLI atualizou o comando tradicional `docker-compose` para a forma moderna e oficial `docker compose` (com espaço). Recomenda-se que toda a equipe migre para `docker compose` para garantir compatibilidade futura, melhor integração e acesso a novos recursos do Docker.
+- A ferramenta Docker CLI atualizou o comando tradicional `docker-compose` para a forma moderna e oficial `docker compose` (com espaço). Recomenda-se que toda a equipe migre para `docker compose` para garantir compatibilidade futura, melhor integração e acesso a novos recursos do Docker.
 
 **Exemplo:**  
-- Uso antigo: `docker-compose up -d`  
-- Uso recomendado: `docker compose up -d`
+- Uso antigo:
+ `docker-compose up -d`  
+- Uso recomendado: 
+`docker compose up -d`
 ---
 
 ## ✅ Checklist Simplificado para Migração e Implantação
