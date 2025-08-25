@@ -565,6 +565,89 @@ docker compose down
 ```
 ---
 
+---
+
+## 📌 Guia Prático para Resolução de Conflitos Git e Boas Práticas
+- Este guia auxilia a manter o repositório sincronizado e a mitigar problemas comuns de conflitos, garantindo um fluxo de trabalho colaborativo mais eficiente.
+
+### Situação comum que gera conflitos
+
+- Alterações simultâneas na mesma linha de arquivos (localmente e via interface web no GitHub)
+- Histórico divergente entre repositórios local e remoto
+- Tentativa de `git pull` ou `git push` bloqueada por conflitos ou rejeição da sincronização
+
+### Passo a passo para resolver conflitos após `git pull`
+
+- 1. Verifique os arquivos com conflito:
+```
+git status
+```
+
+- 2. Edite os arquivos com conflito (ex: `README.md`), localize os marcadores de conflito:
+```
+<<<<<<< HEAD
+(seu código local)
+(código do remoto)
+commit_hash
+```
+
+- 3. Resolva os conflitos manualmente, removendo as linhas com os marcadores e definindo o conteúdo final.
+
+- 4. Marque como resolvido:
+```
+git add <arquivo-conflitado>
+```
+
+- 5. Complete o merge com um commit:
+```
+git commit
+```
+
+- 6. Sincronize o branch com o remoto:
+```
+git push origin main
+```
+
+---
+
+### Caso queira abortar o merge pendente:
+```
+git merge --abort
+```
+
+---
+
+### Boas práticas para evitar conflitos
+
+- Sempre faça `git pull` para atualizar seu branch local antes de iniciar alterações.
+
+- Use `git status` para verificar se há alterações não commitadas e organize-as (commit, stash ou descarte) antes de atualizar.
+
+- Configure o git para usar merge automático ao puxar as atualizações, evitando pedidos frequentes de métodos de reconciliação:
+```
+git config --global pull.rebase false
+```
+
+- Prefira trabalhar com branches para novas funcionalidades e evite alterações diretas e simultâneas no branch principal.
+
+- Comunique-se com a equipe para evitar edições conflitantes nos mesmos arquivos simultaneamente.
+
+---
+
+### Fluxo de trabalho recomendado
+```
+git pull origin main
+```
+
+- Verificar mudanças locais e preparar para commit
+```
+git status
+git add .
+git commit -m "Mensagem clara e descritiva"
+git push origin main
+```
+---
+
 ## 📄 Licença
 
 - Projeto exclusivo K7 Studio – Todos os direitos reservados.
