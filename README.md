@@ -192,29 +192,28 @@ git push origin main
 
 ## ✅ Checklist Simplificado para Migração e Implantação
 
-- Atualizar .env com UID e GID corretos
+### Atualizar .env com UID e GID corretos
 ```
 echo "LOCAL_USER_ID=$(id -u)" > .env
 echo "LOCAL_GROUP_ID=$(id -g)" >> .env
 ```
 
-- Limpar containers órfãos
+### Limpar containers órfãos
 ```
 docker compose down --remove-orphans
 ```
-- Build da imagem Docker
+### Build da imagem Docker
 ```
 docker build -t k7studio-build -f config/Dockerfile .
 ```
-- Subir o container
+### Subir o container
 ```
 docker compose up --remove-orphans -d
 ```
-
-- Acessar container
+### Acessar container
 docker compose exec k7studio /bin/bash
 
-- Executar scripts em sequência
+### Executar scripts em sequência
 ```
 ./scripts/install-tools.sh
 ./scripts/optimize-projeto.sh
@@ -222,12 +221,12 @@ docker compose exec k7studio /bin/bash
 ./scripts/validate-deploy.sh
 ```
 
-- Prévia local (novo conteúdo)
+### Prévia local (novo conteúdo)
 ```
 docker compose run --service-ports k7studio ./scripts/preview-build.sh
 ```
 
-# Commit e push
+### Commit e push
 ```
 git add .
 git commit -m "chore: atualização incremental"
