@@ -1,6 +1,6 @@
 # 🎯 K7 Studio – Sistema de Otimização e CI/CD com Docker Ubuntu 24.04
 
-- Este projeto implementa uma cadeia DevOps completa para garantir **performance mobile-first**, **zero-downtime** e **automação CI/CD robusta** do site [k7studio.com.br](https://k7studio.com.br), agora em ambiente padronizado via container Docker Ubuntu 24.04.
+- Este projeto implementa uma cadeia DevOps completa para garantir **performance mobile-first**, **zero-downtime** e **automação CI/CD robusta** do site `[k7studio.com.br](https://k7studio.com.br)`, agora em ambiente padronizado via container Docker Ubuntu 24.04.
 ---
 
 ## 📌 Principais Recursos
