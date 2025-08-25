@@ -99,7 +99,7 @@ docker-compose run k7studio /bin/bash
 ```
 ---
 
-### Ordem correta das operações Git para uso do repositório K7 Studio
+## 📌 Ordem correta das operações Git para uso do repositório K7 Studio
 
 - Antes de enviar suas alterações para o repositório remoto, siga esta sequência correta para evitar problemas de autenticação e garantir que seu histórico local esteja consistente:
 
