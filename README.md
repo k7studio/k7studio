@@ -135,7 +135,7 @@ git push origin main
 ```
 ---
 
-### **Observação:**  
+### 💾 Observação:  
 - Certifique-se de configurar corretamente as chaves SSH no seu sistema e adicionar a chave pública em sua conta GitHub para autenticação sem senha.  
 - Caso precise de ajuda para configurar SSH ou resolver problemas de autenticação, revise a seção FAQ.
 
