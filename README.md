@@ -262,6 +262,29 @@ Para que as atualizações locais reflitam no container e o processo funcione se
 
 ## ❓ FAQ - Dúvidas Comuns sobre Docker, Preview Local e Deploy
 
+### Como saber se a configuração SSH para GitHub está funcionando?
+
+Após configurar sua chave SSH local e alterar a URL remota do Git para usar o protocolo SSH com o comando:
+
+git remote set-url origin git@github.com:k7studio/k7studio.git
+
+ao executar um push, espere uma saída semelhante a esta:
+
+Enumerating objects: 80, done.
+Counting objects: 100% (80/80), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (71/71), done.
+Writing objects: 100% (78/78), 2.87 MiB | 3.24 MiB/s, done.
+Total 78 (delta 4), reused 17 (delta 1), pack-reused 0
+remote: Resolving deltas: 100% (4/4), completed with 1 local object.
+To github.com:k7studio/k7studio.git
+180a5c7..51a3f7e main -> main
+
+
+Isso significa que o push foi enviado com sucesso usando SSH, sem solicitar usuário ou senha, indicando que a chave SSH está corretamente configurada.
+Em caso de erro ou solicitação de usuário/senha, revise sua configuração SSH e adicione sua chave pública ao GitHub em https://github.com/settings/ssh/new.
+---
+
 ### Por que recebo erro “port is already allocated” ao rodar preview com `docker compose run --service-ports`?
 
 Esse erro acontece quando a porta 8080 já está ocupada no host, geralmente porque o container principal está rodando e já mapeou essa porta.

@@ -1,0 +1,17 @@
+# cloudflare-pages.yml
+# Configuração para pipeline do projeto K7 Studio
+
+name: k7studio
+
+build:
+  command: ./scripts/optimize-projeto.sh && ./scripts/update-content.sh && ./scripts/update-html-fallback.sh
+  directory: build
+
+# environment (opcional) - Defina variáveis de ambiente aqui se necessário
+# environment:
+#   NODE_ENV: production
+#   API_KEY: ${API_KEY_SECRET}
+
+# settings adicionais (opcionais)
+
+
