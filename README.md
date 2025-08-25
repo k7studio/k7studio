@@ -33,13 +33,13 @@ cd k7studio
 ./scripts/docker-build.sh
 ```
 ### 4. Criar arquivo local de variáveis de ambiente para Docker Compose
-
+```
 ./scripts/prepare-local-env.sh
-
+```
 ### 5. Rodar o container para desenvolvimento e execução contínua
-
+```
 docker compose up --remove-orphans -d
-
+```
 # O serviço ficará ativo aguardando comandos, permitindo execução dos scripts com docker compose exec
 ---
 
@@ -65,37 +65,38 @@ docker compose up --remove-orphans -d
 ### Exemplos de uso:
 
 - Instalar ferramentas necessárias:
-
+```
 ./scripts/install-tools.sh
-
+```
 - Executar otimização completa:
-
+```
 ./scripts/optimize-projeto.sh
-
+```
 - Atualizar fallback de imagens WebP no HTML:
-
+```
 ./scripts/update-html-fallback.sh
-
+```
 - Validar deploy (sem Lighthouse CI por padrão):
-
+```
 ./scripts/validate-deploy.sh
-
+```
 - Validar deploy com Lighthouse CI manualmente:
-
+```
 ./scripts/validate-deploy.sh --lighthouse
-
+```
 - Fluxo completo de build até validação:
-
+```
 ./scripts/run-all.sh
-
+```
 - Rollback de uma versão anterior:
-
+```
 ./scripts/rollback.sh --list
 ./scripts/rollback.sh --backup <timestamp> --force
-
+```
 - Executar container para desenvolvimento interativo:
-
+```
 docker-compose run k7studio /bin/bash
+```
 ---
 
 ### Ordem correta das operações Git para uso do repositório K7 Studio
@@ -103,35 +104,35 @@ docker-compose run k7studio /bin/bash
 Antes de enviar suas alterações para o repositório remoto, siga esta sequência correta para evitar problemas de autenticação e garantir que seu histórico local esteja consistente:
 
 1. Configurar seu nome e e-mail para commits (uma única vez por máquina):
-
+```
 git config user.name "K7 Studio"
 git config user.email "k7.danceandsport@gmail.com"
-
+```
 2. Clonar o repositório (caso ainda não tenha):
-
+```
 git clone https://github.com/k7studio/k7studio.git
 cd k7studio
-
+```
 3. Configurar a URL remota para usar SSH (antes do primeiro push para evitar solicitar senha):
-
+```
 git remote set-url origin git@github.com:k7studio/k7studio.git
-
+```
 4. Verificar o status dos arquivos modificados/localizados:
-
+```
 git status
-
+```
 5. Adicionar as alterações para o próximo commit:
-
+```
 git add .
-
+```
 6. Criar o commit local com mensagem clara e descritiva:
-
+```
 git commit -m "Descrição clara da mudança realizada"
-
+```
 7. Enviar as alterações para o ramo principal no repositório remoto:
-
+```
 git push origin main
-
+```
 ---
 
 **Observação:**  
@@ -148,7 +149,7 @@ git push origin main
 ---
 
 ## 📁 Estrutura dos Diretórios no Projeto
-
+```
 /workspace
 ├── index.html
 ├── css/
@@ -164,6 +165,7 @@ git push origin main
 ├── .env.example
 ├── local.env
 ├── README.md
+```
 ---
 
 ## 💾 Considerações Importantes
@@ -189,17 +191,24 @@ A ferramenta Docker CLI atualizou o comando tradicional `docker-compose` para a 
 ## ✅ Checklist Simplificado para Migração e Implantação
 
 # Atualizar .env com UID e GID corretos
+```
 echo "LOCAL_USER_ID=$(id -u)" > .env
 echo "LOCAL_GROUP_ID=$(id -g)" >> .env
+```
 
 # Limpar containers órfãos
+```
 docker compose down --remove-orphans
-
+```
 # Build da imagem Docker
+```
 docker build -t k7studio-build -f config/Dockerfile .
+```
 
 # Subir o container
+```
 docker compose up --remove-orphans -d
+```
 
 # Acessar container
 docker compose exec k7studio /bin/bash
