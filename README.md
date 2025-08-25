@@ -635,17 +635,27 @@ git config --global pull.rebase false
 ---
 
 ### Fluxo de trabalho recomendado
+
+### Fluxo correto ao editar pela interface web
+- Supondo que uma edição foi feita no arquivo README.md via interface web:
+- Antes de fazer novas edições locais, execute:
 ```
 git pull origin main
 ```
+- Agora seu repositório local está atualizado com as alterações feitas remotamente.
+- Faça suas edições locais normalmente.
+- Siga o fluxo para verificar mudanças locais e preparar para commit
+```
+git status        # Verifique as mudanças locais
+git add .         # Adicione as mudanças ao stage
+git commit -m "Sua mensagem de commit"  # Faça o commit localmente
+git push origin main                   # Envie para remoto
+```
 
-- Verificar mudanças locais e preparar para commit
-```
-git status
-git add .
-git commit -m "Mensagem clara e descritiva"
-git push origin main
-```
+### Resumo
+- Sempre execute `git pull origin main` antes de modificar arquivos localmente, principalmente se alguma alteração foi feita remotamente (via interface web ou outro colaborador).
+- Isso mantém seu histórico local sincronizado com o remoto e evita conflitos.
+- Depois executa o fluxo normal de `add`, `commit`, `push`.
 ---
 
 ## 📄 Licença
