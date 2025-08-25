@@ -192,67 +192,77 @@ git push origin main
 
 ## ✅ Checklist Simplificado para Migração e Implantação
 
-# Atualizar .env com UID e GID corretos
+- Atualizar .env com UID e GID corretos
 ```
 echo "LOCAL_USER_ID=$(id -u)" > .env
 echo "LOCAL_GROUP_ID=$(id -g)" >> .env
 ```
 
-# Limpar containers órfãos
+- Limpar containers órfãos
 ```
 docker compose down --remove-orphans
 ```
-# Build da imagem Docker
+- Build da imagem Docker
 ```
 docker build -t k7studio-build -f config/Dockerfile .
 ```
-
-# Subir o container
+- Subir o container
 ```
 docker compose up --remove-orphans -d
 ```
 
-# Acessar container
+- Acessar container
 docker compose exec k7studio /bin/bash
 
-# Executar scripts em sequência
+- Executar scripts em sequência
+```
 ./scripts/install-tools.sh
 ./scripts/optimize-projeto.sh
 ./scripts/update-content.sh
 ./scripts/validate-deploy.sh
+```
 
-# Prévia local (novo conteúdo)
+- Prévia local (novo conteúdo)
+```
 docker compose run --service-ports k7studio ./scripts/preview-build.sh
+```
 
 # Commit e push
+```
 git add .
 git commit -m "chore: atualização incremental"
 git push origin main
-
+```
 ## 💾 Considerações Importantes
-- Existe o script scripts/preview-build.sh para pré-visualização local, reforçando o uso do parâmetro --service-ports.
+- Existe o script scripts/preview-build.sh para pré-visualização local, reforçando o uso do parâmetro `--service-ports`.
 
 ## ✅ Checklist Simplificado para Atualização Incremental (exemplo: index.html) no Projeto K7 Studio
 
-# 1. Alterar o arquivo localmente no diretório do projeto
+1. Alterar o arquivo localmente no diretório do projeto
 # (exemplo: editar index.html, css/, js/, imagens, etc)
 
-# 2. Garantir que as alterações estejam sincronizadas no container
+2. Garantir que as alterações estejam sincronizadas no container
 # Se usar volumes docker, atualizações são refletidas imediatamente no container.
 
-# 3. Executar atualização incremental dentro do container:
+3. Executar atualização incremental dentro do container:
+```
 docker compose exec k7studio ./scripts/update-content.sh
+```
 
-# 4. (Opcional) Validar a atualização:
+4. (Opcional) Validar a atualização:
+```
 docker compose exec k7studio ./scripts/validate-deploy.sh
+```
 
-# 5. (Opcional) Pré-visualizar build atualizado no host:
+5. (Opcional) Pré-visualizar build atualizado no host:
 docker compose run --service-ports k7studio ./scripts/preview-build.sh
 
-# 6. Comitar e enviar para o repositório para disparo do pipeline:
+6. Comitar e enviar para o repositório para disparo do pipeline:
+```
 git add .
 git commit -m "chore: atualização incremental de conteúdo"
 git push origin main
+```
 
 ## 💾 Considerações Importantes
 - Lembrar que a sincronização via volumes é essencial para que as atualizações locais reflitam no container, evitando dúvidas.
